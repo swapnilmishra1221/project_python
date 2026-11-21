@@ -1,0 +1,18 @@
+Transaction_ID,Transaction_Date,Account_Type,Transaction_Type,Channel,City,Amount,Flagged
+BNK500472,2026-06-14 00:29:00,Salary,Credit,ATM,Chandigarh,740044.26,No
+BNK500158,2026-07-18 07:46:00,Savings,Credit,ATM,Pune,739686.01,No
+BNK500147,2026-08-26 16:25:00,Current,Credit,Net Banking,Mumbai,724612.11,No
+BNK500384,2026-04-16 08:48:00,Salary,Credit,UPI,Mumbai,719686.13,No
+BNK500993,2026-03-25 18:25:00,Business,Debit,Branch,Ahmedabad,710477.02,Yes
+BNK500654,2026-08-26 07:05:00,Savings,Debit,ATM,Lucknow,697146.59,No
+BNK501417,2026-04-14 07:44:00,Salary,Debit,Branch,Pune,678790.44,No
+BNK501279,2026-09-30 09:24:00,Savings,Credit,Mobile App,Lucknow,675900.66,No
+BNK500280,2026-05-15 16:31:00,Salary,Credit,Net Banking,Kochi,674818.0,No
+BNK500811,2026-09-26 01:55:00,Business,Debit,UPI,Delhi,618418.82,No
+BNK500968,2026-10-10 16:59:00,Salary,Credit,UPI,Kochi,596070.14,No
+BNK500429,2026-08-23 08:36:00,Salary,Credit,POS,Delhi,544941.01,No
+BNK500764,2026-05-23 17:52:00,Savings,Debit,UPI,Mumbai,463794.31,No
+BNK500716,2026-05-05 01:03:00,Savings,Credit,Branch,Delhi,452484.56,No
+BNK501403,2026-06-22 13:14:00,Salary,Debit,UPI,Chandigarh,375579.62,Yes
+BNK501385,2026-03-26 03:32:00,Savings,Credit,Net Banking,Ahmedabad,330902.39,No
+BNK500892,2026-08-12 02:53:00,Savings,Debit,Mobile App,Mumbai,302641.03,No

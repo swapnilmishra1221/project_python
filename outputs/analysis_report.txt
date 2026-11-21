@@ -1,0 +1,237 @@
+
+======================================================================
+1. LOAD AND INSPECT
+======================================================================
+Loaded dataset from: C:\Users\asmit\OneDrive\Desktop\Project_hcl\10_bank_transactions.csv
+Shape: 1512 rows x 9 columns
+
+Column types:
+Transaction_ID          str
+Transaction_Date        str
+Account_ID              str
+Account_Type            str
+Transaction_Type        str
+Channel                 str
+City                    str
+Amount              float64
+Flagged                 str
+
+First 5 rows:
+Transaction_ID Transaction_Date Account_ID Account_Type Transaction_Type     Channel      City  Amount Flagged
+     BNK501271 2026-10-23 05:16     AC2444      Savings           Credit         ATM Ahmedabad  495.05      No
+     BNK500802 2026-04-24 02:48     AC2329      Current           Credit  Mobile App   Lucknow     NaN      No
+     BNK500533 2026-03-25 09:56     AC2597      Savings           Credit         ATM     Delhi 9737.71      No
+     BNK500742 2026-04-12 08:09     AC2596     Business            Debit Net Banking Bengaluru 3371.81      No
+     BNK500596 2026-05-24 23:53     AC2048       Salary           Credit      Branch     Delhi 5282.20      No
+
+Missing values per column:
+Transaction_ID       0
+Transaction_Date     0
+Account_ID           0
+Account_Type         0
+Transaction_Type     0
+Channel              0
+City                 0
+Amount              37
+Flagged              0
+
+Category values:
+  Account_Type: ['Business', 'Current', 'Salary', 'Savings']
+  Transaction_Type: ['Credit', 'Debit']
+  Channel: ['ATM', 'Branch', 'Mobile App', 'Net Banking', 'POS', 'UPI']
+  City: ['Ahmedabad', 'Bengaluru', 'Chandigarh', 'Delhi', 'Kochi', 'Lucknow', 'Mumbai', 'Pune']
+  Flagged: ['No', 'Yes']
+
+======================================================================
+3. DUPLICATE TRANSACTION_ID CHECK
+======================================================================
+Transaction_IDs appearing more than once: 12
+Extra (repeat) rows: 12
+Of these, fully identical rows: 12
+Handling: keep the first occurrence of each Transaction_ID, drop repeats.
+Rows after de-duplication: 1500
+
+======================================================================
+2. MISSING TRANSACTION AMOUNTS
+======================================================================
+Missing Amount values (after de-duplication): 37 (2.47%)
+Handling: filled with the median Amount of the same Account_Type and Transaction_Type (median is robust to the heavy right skew).
+Imputed rows are marked in column Amount_Imputed; they are kept so that transaction counts stay complete.
+Missing Amount values after handling: 0
+
+======================================================================
+4. TOTAL CREDITS AND DEBITS
+======================================================================
+                  Transactions  Total_Amount  Mean_Amount  Share_of_Value_%
+Transaction_Type                                                           
+Credit                     788   11711748.98     14862.63             59.36
+Debit                      712    8019130.94     11262.82             40.64
+
+Total credits: 11,711,748.98
+Total debits : 8,019,130.94
+Net (credits - debits): 3,692,618.04
+
+======================================================================
+5. AMOUNT STATISTICS
+======================================================================
+Mean   : 13,153.92
+Median : 4,428.60
+Std dev: 64,239.70 (sample, ddof=1)
+Skew note: mean/median = 2.97. A mean well above the median indicates a right-skewed distribution driven by large transactions.
+
+======================================================================
+6. TRANSACTION VOLUME BY CHANNEL
+======================================================================
+             Transactions  Total_Value  Mean_Amount  Median_Amount  Volume_Share_%
+Channel                                                                           
+Mobile App            356   3237288.62      9093.51        4081.12           23.73
+UPI                   313   4641867.44     14830.25        4082.23           20.87
+POS                   292   2455729.77      8410.03        4633.23           19.47
+ATM                   215   3628828.01     16878.27        4874.90           14.33
+Branch                187   3099488.80     16574.81        5026.68           12.47
+Net Banking           137   2667677.29     19472.10        4823.81            9.13
+
+======================================================================
+7. TOTAL TRANSACTION VALUE BY CITY
+======================================================================
+            Transactions  Total_Value  Mean_Amount  Value_Share_%
+City                                                             
+Mumbai               260   3996347.96     15370.57          20.25
+Delhi                277   3515716.94     12692.12          17.82
+Pune                 155   2491524.83     16074.35          12.63
+Lucknow              151   2188957.98     14496.41          11.09
+Kochi                140   2165138.06     15465.27          10.97
+Chandigarh           164   2130278.39     12989.50          10.80
+Ahmedabad            165   2048468.75     12414.96          10.38
+Bengaluru            188   1194447.01      6353.44           6.05
+
+======================================================================
+8. FLAGGED TRANSACTIONS (supplied label, NOT proof of fraud)
+======================================================================
+Flagged transactions: 53 of 1500 (3.53%)
+             count          sum      mean   median
+Not flagged   1447  18203733.00  12580.33  4407.09
+Flagged         53   1527146.92  28814.09  5859.45
+
+======================================================================
+9. FLAGGED PERCENTAGE BY CHANNEL
+======================================================================
+             Flagged  Transactions  Flagged_%
+Channel                                      
+UPI               19           313       6.07
+ATM                8           215       3.72
+Net Banking        5           137       3.65
+POS                8           292       2.74
+Branch             5           187       2.67
+Mobile App         8           356       2.25
+Caution: with small counts per channel, differences in these percentages may be due to chance.
+
+======================================================================
+10. TEN LARGEST TRANSACTIONS
+======================================================================
+Transaction_ID    Transaction_Date Account_Type Transaction_Type     Channel       City    Amount Flagged
+     BNK500472 2026-06-14 00:29:00       Salary           Credit         ATM Chandigarh 740044.26      No
+     BNK500158 2026-07-18 07:46:00      Savings           Credit         ATM       Pune 739686.01      No
+     BNK500147 2026-08-26 16:25:00      Current           Credit Net Banking     Mumbai 724612.11      No
+     BNK500384 2026-04-16 08:48:00       Salary           Credit         UPI     Mumbai 719686.13      No
+     BNK500993 2026-03-25 18:25:00     Business            Debit      Branch  Ahmedabad 710477.02     Yes
+     BNK500654 2026-08-26 07:05:00      Savings            Debit         ATM    Lucknow 697146.59      No
+     BNK501417 2026-04-14 07:44:00       Salary            Debit      Branch       Pune 678790.44      No
+     BNK501279 2026-09-30 09:24:00      Savings           Credit  Mobile App    Lucknow 675900.66      No
+     BNK500280 2026-05-15 16:31:00       Salary           Credit Net Banking      Kochi 674818.00      No
+     BNK500811 2026-09-26 01:55:00     Business            Debit         UPI      Delhi 618418.82      No
+
+======================================================================
+11. CREDIT AND DEBIT TOTALS BY ACCOUNT TYPE
+======================================================================
+                               Transactions  Total_Amount  Mean_Amount
+Account_Type Transaction_Type                                         
+Business     Credit                     120    1287422.73     10728.52
+             Debit                      114    2375402.92     20836.87
+Current      Credit                     149    1775213.35     11914.18
+             Debit                      123     847652.30      6891.48
+Salary       Credit                     233    4852409.62     20825.79
+             Debit                      205    2265499.18     11051.22
+Savings      Credit                     286    3796703.28     13275.19
+             Debit                      270    2530576.54      9372.51
+
+Pivot (total amount):
+Transaction_Type      Credit       Debit         Net
+Account_Type                                        
+Business          1287422.73  2375402.92 -1087980.19
+Current           1775213.35   847652.30   927561.05
+Salary            4852409.62  2265499.18  2586910.45
+Savings           3796703.28  2530576.54  1266126.74
+
+======================================================================
+12. OUTLIERS USING IQR
+======================================================================
+Q1 = 2,442.81  Q3 = 7,899.40  IQR = 5,456.59
+Lower fence = -5,742.07  Upper fence = 16,084.28
+Outliers: 125 (8.33% of transactions)
+Flagged share among outliers: 6.40% vs 3.27% among non-outliers
+Outliers account for 65.7% of total transaction value.
+
+======================================================================
+13. TRANSACTION AMOUNT BANDS
+======================================================================
+             Transactions  Total_Value  Flagged  Count_Share_%  Value_Share_%  Flagged_%
+Amount_Band                                                                             
+<=1K                   94     60299.79        3           6.27           0.31       3.19
+1K-5K                 756   2243294.54       21          50.40          11.37       2.78
+5K-10K                379   2646025.52       11          25.27          13.41       2.90
+10K-50K               247   4266287.94       16          16.47          21.62       6.48
+50K-100K                7    468979.03        0           0.47           2.38       0.00
+>100K                  17  10045993.10        2           1.13          50.92      11.76
+
+======================================================================
+14. NUMPY BOOLEAN INDEXING (Amount > 100,000)
+======================================================================
+Transactions above threshold: 17 (1.13%)
+Total value above threshold : 10,045,993.10 (50.9% of all value)
+Largest: 740,044.26  Smallest in subset: 302,641.03  Mean: 590,940.77
+Breakdown of above-threshold transactions by channel:
+Channel
+UPI            5
+ATM            3
+Net Banking    3
+Branch         3
+Mobile App     2
+POS            1
+
+======================================================================
+EXTRA: MONTHLY TREND
+======================================================================
+Transaction_Type     Credit      Debit
+Transaction_Date                      
+2026-03-01        1038594.0  1235854.0
+2026-04-01        1278143.0  1155653.0
+2026-05-01        2099006.0  1072926.0
+2026-06-01        1312410.0   943471.0
+2026-07-01        1475730.0   494216.0
+2026-08-01        2031102.0  1573189.0
+2026-09-01        1334173.0  1076333.0
+2026-10-01        1142591.0   467488.0
+
+Charts written to outputs/charts.html (open in a browser).
+
+======================================================================
+15. OBSERVATIONS AND RECOMMENDATIONS
+======================================================================
+
+1. Observation: Channel mix: Mobile App has the highest volume (356 transactions, 23.7% of all).
+   Recommendation: Review capacity and monitoring coverage for the busiest channels first, and track whether the mix shifts over time before drawing conclusions.
+
+2. Observation: City value: Mumbai has the highest total value (20.2% of value). Differences between cities may reflect customer mix and a few large transactions rather than behaviour.
+   Recommendation: Compare cities on median and per-account values as well as totals, so a handful of large transactions does not drive the picture.
+
+3. Observation: Flagged label: 53 records (3.53%) carry the supplied flag. UPI shows the highest flagged share (6.1%) and Mobile App the lowest (2.2%). Flags are a supplied label, not proof of fraud, and counts per channel are small.
+   Recommendation: Treat flags as a prioritisation aid for manual review only. Document how the flag is assigned and review it with the owning team before any action.
+
+4. Observation: Large values: the IQR rule marks 125 transactions (8.3%) as outliers, holding 65.7% of total value. Large amounts are unusual in this data but not wrong by themselves.
+   Recommendation: Review the outlier list for data-entry or unit errors and check whether large amounts have a legitimate explanation (e.g. business accounts) before escalation.
+
+5. Observation: Data quality: 12 repeated Transaction_IDs and 37 missing amounts were found. Median imputation keeps counts complete but adds estimated values.
+   Recommendation: Add uniqueness and not-null checks at data load, and report imputed rows separately so totals can be read with that uncertainty in mind.
+
+Reminder: the dataset is synthetic. These notes describe transaction behaviour only and must not be used for fraud claims.
